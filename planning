@@ -1,0 +1,172 @@
+Планирование
+-Категория
+-Тег
+-Пользователь
+-Комментарий
+-Подписка
+-Пост
+
+-------------------Post------------------------
+id
+title
+slug - ссылка
+content
+date
+image
+description
+category_id
+user_id
+status - (черновик или опубликовано)
+views - просмотры
+is_featured - рекомендованые
+created_at
+updated_at
+
+связь з тегами через таблицу:
+post_tags
+category()
+user()
+comments()
+tags()
+
+методы ядра
+add()
+edit()
+remove()
+uploadImage() - загрузить картинку
+removeImage()
+getImage() - вытащить картинку
+setCategory() - установить категорию
+setTags() - установить теги
+toggleStatus() - переключить значение статуса
+toggleFeatured() - переключить значение рекомендовать или нет
+
+-------------------Post------------------------
+
+
+-------------------Category------------------------
+id
+title
+slug
+
+posts() для связи метод
+
+-------------------Category------------------------
+
+
+-------------------Tag------------------------
+id
+title
+slug
+
+posts() для связи метод
+
+-------------------Tag------------------------
+
+
+-------------------User------------------------
+id
+name
+email
+password
+is_admin
+status
+avatar
+created_at
+updated_at
+
+
+// Связь с постами и комментариями
+posts()
+comments()
+
+
+add()
+edit()
+remove()
+uploadAvatar()
+removeAvatar()
+toggleAdmin
+toggleStatus() -переключатель бана пользователя
+
+-------------------User------------------------
+
+-------------------Comment------------------------
+id
+text
+user_id
+posts
+status
+created_at
+updated_at
+
+
+// Связь
+posts()
+author()
+
+toggleStatus()
+-------------------Comment------------------------
+
+-------------------Subscription------------------------
+id
+email
+token -- токен для подтверждения email подпищика
+created_at
+updated_at
+
+add()
+remove()
+
+-------------------Subscription------------------------
+
+**********Табицы******
+posts
+categories
+tags
+post_tags - для связывания постов с тегами
+users
+comments
+subscriptions
+
+**********Табицы******
+
+GET admin/posts PostsController@index
+GET admin/posts/create PostsController@create
+POST admin/posts PostsController@store
+GET admin/posts/{id}/edit PostsController@edit
+PUT admin/posts/{id} PostsController@update
+DELETE admin/posts/{id}/delete PostsController@destroy
+
+
+=========================================
+
+создание ядра проекта Model (бизнес-логика)
+
+php artisan make:model Category -m
+php artisan make:model Tag -m
+php artisan make:model Comment -m
+php artisan make:model Post -m
+php artisan make:model Subscription -m
+
+php artisan make:migration create_posts_tags_table --create=post_tags
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
