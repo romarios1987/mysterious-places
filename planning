@@ -153,9 +153,7 @@ php artisan make:migration create_posts_tags_table --create=post_tags
 
 php artisan migrate
 
-
-
-
+php artisan migrate:refresh
 
 
 
