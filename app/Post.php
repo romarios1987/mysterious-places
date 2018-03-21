@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\Sluggable;
 
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +13,7 @@ class Post extends Model
     use Sluggable;
 
 
-    protected $fillable = ['title', 'content', 'description'];
+    protected $fillable = ['title', 'content', 'description', 'date'];
 
 
     /**
@@ -31,19 +32,20 @@ class Post extends Model
 
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function category()
     {
-        return $this->hasOne(Category::class);
+        return $this->belongsTo(Category::class);
     }
 
+
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function author()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     /**
@@ -57,7 +59,6 @@ class Post extends Model
             'post_id',
             'tag_id');
     }
-
 
     /**
      * Создание поста
@@ -91,10 +92,7 @@ class Post extends Model
      */
     public function remove()
     {
-        // Удаление картинки с папки
-        Storage::delete('uploads/post/' . $this->image);
-
-        // Удалить картинку поста
+        $this->removeImage();
         $this->delete();
     }
 
@@ -104,20 +102,30 @@ class Post extends Model
      */
     public function uploadImage($image)
     {
-
         if ($image == null) {
             return;
         }
 
-        // Удаление картинки с папки
-        Storage::delete('uploads/post/' . $this->image);
+        $this->removeImage();
 
         // название картинки
         $filename = str_random(10) . '.' . $image->extension();
 
-        $image->savaAs('uploads/post', $filename);
+        $image->storeAs('uploads/post', $filename);
         $this->image = $filename;
         $this->save();
+    }
+
+
+    /**
+     * Удаления картинки
+     */
+    public function removeImage()
+    {
+        if ($this->image != null) {
+            // Удаление картинки с папки
+            Storage::delete('uploads/post/' . $this->image);
+        }
     }
 
 
@@ -132,9 +140,7 @@ class Post extends Model
         } else {
             return '/uploads/post/' . $this->image;
         }
-
     }
-
 
     /**
      * сохранение категории (привязка категории)
@@ -194,7 +200,6 @@ class Post extends Model
         return $this->setPublic();
     }
 
-
     /**
      * Статус поста - Рекомендованый пост
      */
@@ -225,6 +230,64 @@ class Post extends Model
         return $this->setFeatured();
     }
 
+
+    /**
+     * Метод сеттер форматирования даты (мутаторы)
+     * @param $value
+     */
+    public function setDateAttribute($value)
+    {
+        // есть "22/03/18"
+        // делаем формат 201-09-13
+
+        $date = Carbon::createFromFormat('d/m/y', $value)->format('Y-m-d');
+        $this->attributes['date'] = $date;
+    }
+
+
+    /**
+     * Метод геттер форматирования даты на вывод
+     * @param $value
+     * @return string
+     */
+    public function getDateAttribute($value)
+    {
+        $date = Carbon::createFromFormat('Y-m-d', $value)->format('d/m/y');
+        return $date;
+    }
+
+
+    /**
+     * Вывод категории для поста
+     * @return string
+     */
+    public function getCategoryTitle()
+    {
+        if ($this->category != null) {
+            return $this->category->title;
+        }
+        return 'Нет категории';
+    }
+
+    /**
+     * @return null
+     */
+    public function getCategoryID()
+    {
+        return $this->category != null ? $this->category->id : null;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getTagsTitles()
+    {
+        if (!$this->tags->isEmpty()) {
+            return implode(', ', $this->tags->pluck('title')->all());
+        }
+        return 'Нет тегов';
+    }
 
 }
 

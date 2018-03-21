@@ -110,6 +110,9 @@ class User extends Authenticatable
         $this->save();
     }
 
+    /**
+     * Удаления аватара
+     */
     public function removeAvatar(){
         if($this->avatar != null){
             // Удаление картинки с папки
