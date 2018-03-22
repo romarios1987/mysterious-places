@@ -51,3 +51,38 @@ mix.copy('resources/assets/backend/dist/img', 'public/img');
 mix.copy('resources/assets/backend/plugins/iCheck/minimal/blue.png', 'public/css');
 
 
+
+/**
+ * Подключаем все файлы для фронтенда
+ */
+
+mix.styles([
+    'resources/assets/frontend/css/bootstrap.min.css',
+    'resources/assets/frontend/css/font-awesome.min.css',
+    'resources/assets/frontend/css/animate.min.css',
+    'resources/assets/frontend/css/owl.carousel.css',
+    'resources/assets/frontend/css/owl.theme.css',
+    'resources/assets/frontend/css/owl.transitions.css',
+    'resources/assets/frontend/css/style.css',
+    'resources/assets/frontend/css/responsive.css'
+], 'public/css/front.css');
+
+mix.scripts([
+    'resources/assets/frontend/js/jquery-1.11.3.min.js',
+    'resources/assets/frontend/js/bootstrap.min.js',
+    'resources/assets/frontend/js/owl.carousel.min.js',
+    'resources/assets/frontend/js/jquery.stickit.min.js',
+    'resources/assets/frontend/js/menu.js',
+    'resources/assets/frontend/js/scripts.js'
+], 'public/js/front.js');
+
+// Копируем картинки в папку public
+mix.copy('resources/assets/frontend/images', 'public/img');
+
+// Копируем шрифты в папку public
+mix.copy('resources/assets/frontend/fonts', 'public/fonts');
+
+
+
+
+
