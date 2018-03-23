@@ -258,7 +258,7 @@ class Post extends Model
 
 
     /**
-     * Вывод категории для поста
+     * Вывод заголовка категории для поста
      * @return string
      */
     public function getCategoryTitle()
@@ -270,6 +270,7 @@ class Post extends Model
     }
 
     /**
+     * Наличие в поста категории
      * @return null
      */
     public function getCategoryID()
@@ -277,8 +278,8 @@ class Post extends Model
         return $this->category != null ? $this->category->id : null;
     }
 
-
     /**
+     * Вывод заголовка тегов для поста
      * @return string
      */
     public function getTagsTitles()
@@ -291,13 +292,59 @@ class Post extends Model
 
 
     /**
+     * Вывод форматированной даты для поста
      * @return string
      */
     public function getDate()
     {
         //dd($this->date);
-       return Carbon::createFromFormat('d/m/y', $this->date)->format('F d, Y');
+        return Carbon::createFromFormat('d/m/y', $this->date)->format('F d, Y');
     }
+
+
+    /**
+     * Возвращает предыдущий пост
+     * @return mixed
+     */
+    public function hasPrevious()
+    {
+        return self::where('id', '<', $this->id)->max('id');
+    }
+
+
+    public function getPrevious()
+    {
+        $postID = $this->hasPrevious(); // ID
+        return self::find($postID);
+    }
+
+
+    /**
+     * Возвращает следующий пост
+     * @return mixed
+     */
+    public function hasNext()
+    {
+        return self::where('id', '>', $this->id)->min('id');
+    }
+
+    public function getNext()
+    {
+        $postID = $this->hasNext(); // ID
+        return self::find($postID);
+    }
+
+
+    /**
+     * Выводим все посты кроме текущего
+     * @return static
+     */
+    public function related()
+    {
+        return self::all()->except($this->id);
+    }
+
+
 }
 
 
