@@ -13,7 +13,7 @@ class Post extends Model
     use Sluggable;
 
 
-    protected $fillable = ['title', 'content', 'description', 'date'];
+    protected $fillable = ['title', 'content', 'description', 'date', 'slug'];
 
 
     /**
@@ -289,6 +289,15 @@ class Post extends Model
         return 'Нет тегов';
     }
 
+
+    /**
+     * @return string
+     */
+    public function getDate()
+    {
+        //dd($this->date);
+       return Carbon::createFromFormat('d/m/y', $this->date)->format('F d, Y');
+    }
 }
 
 

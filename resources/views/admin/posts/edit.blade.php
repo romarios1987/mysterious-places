@@ -75,7 +75,7 @@
                         <div class="form-group">
                             <label for="description">Краткое описание</label>
                             <textarea name="description" id="description" cols="30" rows="10"
-                                      class="form-control">{{$post->content}}</textarea>
+                                      class="form-control">{{$post->description}}</textarea>
                         </div>
                     </div>
 
