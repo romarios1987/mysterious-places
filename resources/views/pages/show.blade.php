@@ -12,9 +12,14 @@
                         </div>
                         <div class="post-content">
                             <header class="entry-header text-center text-uppercase">
-                                <h6><a href="#"> {{$post->getCategoryTitle()}}</a></h6>
 
-                                <h1 class="entry-title"><a href="blog.html">{{$post->title}}</a></h1>
+                                @if($post->hasCategory())
+                                    <h6>
+                                        <a href="{{route('category.show', $post->category->slug)}}">{{$post->getCategoryTitle()}}</a>
+                                    </h6>
+                                @endif
+
+                                <h1 class="entry-title">{{$post->title}}</h1>
 
 
                             </header>
@@ -23,7 +28,7 @@
                             </div>
                             <div class="decoration">
                                 @foreach($post->tags as $tag)
-                                    <a href="#" class="btn btn-default">{{$tag->title}}</a>
+                                    <a href="{{route('tag.show', $tag->slug)}}" class="btn btn-default">{{$tag->title}}</a>
                                 @endforeach
                             </div>
 

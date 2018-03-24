@@ -12,7 +12,14 @@
 
 Route::get('/', 'HomeController@index');
 
+// маршрут для отдельного поста
 Route::get('/post/{slug}', 'HomeController@show')->name('post.show');
+
+// маршрут для вывода постов по тегу
+Route::get('/tag/{slug}', 'HomeController@tag')->name('tag.show');
+
+// маршрут для вывода постов по категории
+Route::get('/category/{slug}', 'HomeController@category')->name('category.show');
 
 
 

@@ -345,6 +345,12 @@ class Post extends Model
     }
 
 
+    public function hasCategory()
+    {
+        return $this->category != null ? true : false;
+    }
+
+
 }
 
 
