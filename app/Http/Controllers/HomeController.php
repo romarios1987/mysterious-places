@@ -36,6 +36,7 @@ class HomeController extends Controller
     {
         $post = Post::where('slug', $slug)->firstOrFail();
 
+
         return view('pages.show', compact('post'));
     }
 

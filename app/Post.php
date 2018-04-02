@@ -48,6 +48,12 @@ class Post extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+
+
+    public function comments(){
+        return $this->hasMany(Comment::class);
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
@@ -350,6 +356,12 @@ class Post extends Model
         return $this->category != null ? true : false;
     }
 
+
+
+    public function getComments()
+    {
+        return $this->comments()->where('status', 1)->get();
+    }
 
 }
 
