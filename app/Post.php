@@ -317,7 +317,6 @@ class Post extends Model
         return self::where('id', '<', $this->id)->max('id');
     }
 
-
     public function getPrevious()
     {
         $postID = $this->hasPrevious(); // ID
@@ -357,7 +356,9 @@ class Post extends Model
     }
 
 
-
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
     public function getComments()
     {
         return $this->comments()->where('status', 1)->get();

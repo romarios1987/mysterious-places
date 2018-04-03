@@ -111,22 +111,23 @@
                         </div>
                     </div><!--related post carousel-->
 
-                        @if(!$post->comments->isEmpty())
-                            @foreach($post->getComments() as $comment)
-                    <div class="bottom-comment"><!--bottom comment-->
-                        <div class="comment-img">
-                            <img class="img-circle" width="100" height="100" src="{{$comment->author->getAvatar()}}" alt="{{$comment->author->name}}">
-                        </div>
-                        <div class="comment-text">
-                            <h5>{{$comment->author->name}}</h5>
-                            <p class="comment-date">{{$comment->created_at->diffForHumans()}}</p>
+                    @if(!$post->comments->isEmpty())
+                        @foreach($post->getComments() as $comment)
+                            <div class="bottom-comment"><!--bottom comment-->
+                                <div class="comment-img">
+                                    <img class="img-circle" width="100" height="100"
+                                         src="{{$comment->author->getAvatar()}}" alt="{{$comment->author->name}}">
+                                </div>
+                                <div class="comment-text">
+                                    <h5>{{$comment->author->name}}</h5>
+                                    <p class="comment-date">{{$comment->created_at->diffForHumans()}}</p>
 
-                            <p class="para">{{$comment->text}}</p>
-                        </div>
-                    </div>
-                    <!-- end bottom comment-->
-                            @endforeach
-                        @endif
+                                    <p class="para">{{$comment->text}}</p>
+                                </div>
+                            </div>
+                            <!-- end bottom comment-->
+                        @endforeach
+                    @endif
                     @if(Auth::check())
                         <div class="leave-comment"><!--leave comment-->
                             <h4>Leave a reply</h4>
