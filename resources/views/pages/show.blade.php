@@ -6,11 +6,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8">
-                    @if(session('status'))
-                        <div class="alert alert-success">
-                            {{session('status')}}
-                        </div>
-                    @endif
+                    {{--@if(session('status'))--}}
+                        {{--<div class="alert alert-success">--}}
+                            {{--{{session('status')}}--}}
+                        {{--</div>--}}
+                    {{--@endif--}}
                     <article class="post">
                         <div class="post-thumb">
                             <a href="blog.html"><img src="{{$post->getImage()}}" alt="{{$post->title}}"></a>
@@ -111,22 +111,23 @@
                         </div>
                     </div><!--related post carousel-->
 
-                        @if(!$post->comments->isEmpty())
-                            @foreach($post->getComments() as $comment)
-                    <div class="bottom-comment"><!--bottom comment-->
-                        <div class="comment-img">
-                            <img class="img-circle" width="100" height="100" src="{{$comment->author->getAvatar()}}" alt="{{$comment->author->name}}">
-                        </div>
-                        <div class="comment-text">
-                            <h5>{{$comment->author->name}}</h5>
-                            <p class="comment-date">{{$comment->created_at->diffForHumans()}}</p>
+                    @if(!$post->comments->isEmpty())
+                        @foreach($post->getComments() as $comment)
+                            <div class="bottom-comment"><!--bottom comment-->
+                                <div class="comment-img">
+                                    <img class="img-circle" width="100" height="100"
+                                         src="{{$comment->author->getAvatar()}}" alt="{{$comment->author->name}}">
+                                </div>
+                                <div class="comment-text">
+                                    <h5>{{$comment->author->name}}</h5>
+                                    <p class="comment-date">{{$comment->created_at->diffForHumans()}}</p>
 
-                            <p class="para">{{$comment->text}}</p>
-                        </div>
-                    </div>
-                    <!-- end bottom comment-->
-                            @endforeach
-                        @endif
+                                    <p class="para">{{$comment->text}}</p>
+                                </div>
+                            </div>
+                            <!-- end bottom comment-->
+                        @endforeach
+                    @endif
                     @if(Auth::check())
                         <div class="leave-comment"><!--leave comment-->
                             <h4>Leave a reply</h4>
