@@ -7,7 +7,9 @@
             @include('admin.errors')
             <form action="/subscribe" method="post">
                 {{csrf_field()}}
-                <input type="text" placeholder="Your email address" name="email">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Your email address" name="email">
+                </div>
                 <input type="submit" value="Subscribe Now"
                        class="text-uppercase text-center btn btn-subscribe">
             </form>
